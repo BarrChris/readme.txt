@@ -1,0 +1,180 @@
+
+task2b.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000140  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000ec  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000140  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000170  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  000001b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006a7  00000000  00000000  000001d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000061f  00000000  00000000  0000087f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000024c  00000000  00000000  00000e9e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000050  00000000  00000000  000010ec  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000349  00000000  00000000  0000113c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000096  00000000  00000000  00001485  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  0000151b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__vector_16>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 40 00 	call	0x80	; 0x80 <main>
+  78:	0c 94 74 00 	jmp	0xe8	; 0xe8 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <main>:
+#include <avr/io.h>
+#include <stdio.h>
+
+int main(void)
+{
+	DDRB |= (1<<5) | (1<<2); //Sets PB5/PB2 as outputs
+  80:	84 b1       	in	r24, 0x04	; 4
+  82:	84 62       	ori	r24, 0x24	; 36
+  84:	84 b9       	out	0x04, r24	; 4
+	PORTB |= (1<<5) | (1<<2); //Clears PB5/PB2
+  86:	85 b1       	in	r24, 0x05	; 5
+  88:	84 62       	ori	r24, 0x24	; 36
+  8a:	85 b9       	out	0x05, r24	; 5
+	DDRC = (0<<2); //PC2 as an input
+  8c:	17 b8       	out	0x07, r1	; 7
+	PORTC = (0<<2); //Sets PC2
+  8e:	18 b8       	out	0x08, r1	; 8
+	TCCR0B = 5; //Sets prescaler to 1024
+  90:	85 e0       	ldi	r24, 0x05	; 5
+  92:	85 bd       	out	0x25, r24	; 37
+	TIMSK0 |= (1 << TOIE0);
+  94:	ee e6       	ldi	r30, 0x6E	; 110
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	80 81       	ld	r24, Z
+  9a:	81 60       	ori	r24, 0x01	; 1
+  9c:	80 83       	st	Z, r24
+	sei();
+  9e:	78 94       	sei
+  a0:	ff cf       	rjmp	.-2      	; 0xa0 <main+0x20>
+
+000000a2 <__vector_16>:
+	}
+	return 0;
+}
+
+ISR (TIMER0_OVF_vect)
+{
+  a2:	1f 92       	push	r1
+  a4:	0f 92       	push	r0
+  a6:	0f b6       	in	r0, 0x3f	; 63
+  a8:	0f 92       	push	r0
+  aa:	11 24       	eor	r1, r1
+  ac:	2f 93       	push	r18
+  ae:	3f 93       	push	r19
+  b0:	8f 93       	push	r24
+	int x = 0;
+	if (!(PINC & (1 << PINC2))) //If the pushbutton is pressed, go through this if statement
+  b2:	32 99       	sbic	0x06, 2	; 6
+  b4:	0f c0       	rjmp	.+30     	; 0xd4 <__vector_16+0x32>
+	{
+		PORTB &= ~(1<<2); //Keeps LED on until otherwise
+  b6:	2a 98       	cbi	0x05, 2	; 5
+  b8:	2d e4       	ldi	r18, 0x4D	; 77
+  ba:	30 e0       	ldi	r19, 0x00	; 0
+		while (x <= 76/*TCNT0 != 19530*/) //Delay to keep LED off
+		{
+			while (TCNT0 != 253); // Inner delay loop for 8 bit timer
+  bc:	86 b5       	in	r24, 0x26	; 38
+  be:	8d 3f       	cpi	r24, 0xFD	; 253
+  c0:	e9 f7       	brne	.-6      	; 0xbc <__vector_16+0x1a>
+			TCNT0 = 0; // Reset counter
+  c2:	16 bc       	out	0x26, r1	; 38
+  c4:	21 50       	subi	r18, 0x01	; 1
+  c6:	31 09       	sbc	r19, r1
+{
+	int x = 0;
+	if (!(PINC & (1 << PINC2))) //If the pushbutton is pressed, go through this if statement
+	{
+		PORTB &= ~(1<<2); //Keeps LED on until otherwise
+		while (x <= 76/*TCNT0 != 19530*/) //Delay to keep LED off
+  c8:	c9 f7       	brne	.-14     	; 0xbc <__vector_16+0x1a>
+		{
+			while (TCNT0 != 253); // Inner delay loop for 8 bit timer
+			TCNT0 = 0; // Reset counter
+			x++; // Over Flow Counter
+		}
+		while(TCNT0 != 51); // Additional delay
+  ca:	86 b5       	in	r24, 0x26	; 38
+  cc:	83 33       	cpi	r24, 0x33	; 51
+  ce:	e9 f7       	brne	.-6      	; 0xca <__vector_16+0x28>
+		TCNT0 = 0; // Reset counter
+  d0:	16 bc       	out	0x26, r1	; 38
+  d2:	02 c0       	rjmp	.+4      	; 0xd8 <__vector_16+0x36>
+		x = 0; // Reset Over Flow Counter
+	}
+	else //else, if the pushbutton is not pressed, go through this else statement
+	{
+		PORTB |= (1<<2); //Keeps LED off until otherwise
+  d4:	2a 9a       	sbi	0x05, 2	; 5
+		TCNT0 = 0; //Reset counter
+  d6:	16 bc       	out	0x26, r1	; 38
+	}
+  d8:	8f 91       	pop	r24
+  da:	3f 91       	pop	r19
+  dc:	2f 91       	pop	r18
+  de:	0f 90       	pop	r0
+  e0:	0f be       	out	0x3f, r0	; 63
+  e2:	0f 90       	pop	r0
+  e4:	1f 90       	pop	r1
+  e6:	18 95       	reti
+
+000000e8 <_exit>:
+  e8:	f8 94       	cli
+
+000000ea <__stop_program>:
+  ea:	ff cf       	rjmp	.-2      	; 0xea <__stop_program>
